@@ -26,7 +26,7 @@ namespace StorageManager
         {
             var allStorage = GetAllStorage();
 
-            if (allStorage.Count != storeManifest.Count)
+            if (storeManifest != null && allStorage != null && allStorage.Count != storeManifest.Count)
             {
                 UpdateManifest(allStorage);
             }
@@ -271,12 +271,25 @@ namespace StorageManager
 
         public Module GetModuleById(int id)
         {
-            return GetAllStorage().FirstOrDefault(x => x.getId() == id);
+            var storage = GetAllStorage();
+
+            return storage == null ? null : storage.FirstOrDefault(x => x.getId() == id);
         }
 
-        public List<Module> GetAllStorage(ResourceType resource = null)
+        public List<Module> GetAllStorage()
         {
-            var modules = Module.getCategoryModules(Module.Category.Storage);            
+            var modules = Module.getCategoryModules(Module.Category.Storage);
+
+            if (modules != null)
+            {
+                for (int i = 0; i < modules.Count; i++)
+                {
+                    if (modules[i] == null)
+                    {
+                        modules.RemoveAt(i);
+                    }
+                }
+            }
             return modules;
         }
     }    

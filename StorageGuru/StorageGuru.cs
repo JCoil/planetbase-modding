@@ -14,6 +14,7 @@ namespace StorageManager
         public static StorageGuru GetInstance() { return _instance; }
         public static string STORAGE_MANIFEST_PATH = @"Mods\Settings\storage_manifest.txt";
 
+
         public static StorageController Controller { get; private set; }
 
         private static GameState gameState;
